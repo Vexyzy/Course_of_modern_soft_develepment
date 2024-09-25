@@ -5,7 +5,7 @@ from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives.serialization import load_pem_public_key, load_pem_private_key
 
 
-class FileWorking:
+class file_working:
     """
     Class for work with files and keys.
     """
@@ -127,7 +127,7 @@ class FileWorking:
         - None
         """
         try:
-            FileWorking.write_bytes_file(public_key_path, public_key.public_bytes(encoding=serialization.Encoding.PEM,
+            file_working.write_bytes_file(public_key_path, public_key.public_bytes(encoding=serialization.Encoding.PEM,
                     format=serialization.PublicFormat.SubjectPublicKeyInfo))
         except FileNotFoundError as e:
             raise FileNotFoundError(f"The file {public_key_path} does not exist") from e
@@ -145,7 +145,7 @@ class FileWorking:
         - None
         """
         try:
-            FileWorking.write_bytes_file(private_key_path, private_key.private_bytes(encoding=serialization.Encoding.PEM,
+            file_working.write_bytes_file(private_key_path, private_key.private_bytes(encoding=serialization.Encoding.PEM,
                     format=serialization.PrivateFormat.TraditionalOpenSSL,
                     encryption_algorithm=serialization.NoEncryption()))
         except FileNotFoundError as e:
@@ -163,7 +163,7 @@ class FileWorking:
         - rsa.RSAPublicKey : Returns the public key.
         """
         try:
-            return serialization.load_pem_public_key(FileWorking.read_bytes_file(public_key_path), password=None)
+            return serialization.load_pem_public_key(file_working.read_bytes_file(public_key_path), password=None)
         except FileNotFoundError as e:
             raise FileNotFoundError(f"The file {public_key_path} does not exist") from e
         except Exception as e:
@@ -179,7 +179,7 @@ class FileWorking:
         - rsa.RSAPrivateKey : Returns the private key.
         """
         try:
-            return serialization.load_pem_private_key(FileWorking.read_bytes_file(private_key_path), password=None)
+            return serialization.load_pem_private_key(file_working.read_bytes_file(private_key_path), password=None)
         except FileNotFoundError as e:
             raise FileNotFoundError(f"The file {private_key_path} does not exist") from e
         except Exception as e:
@@ -196,7 +196,7 @@ class FileWorking:
         - None.
         """
         try:
-            FileWorking.write_bytes_file(file_path, file_nonce)
+            file_working.write_bytes_file(file_path, file_nonce)
         except FileNotFoundError as e:
             raise FileNotFoundError(f"The file {file_path} does not exist") from e
         except Exception as e:
@@ -212,7 +212,7 @@ class FileWorking:
         - bytes : The bytes read from the file.
         """
         try:
-            return FileWorking.read_bytes_file(file_path)
+            return file_working.read_bytes_file(file_path)
         except FileNotFoundError as e:
             raise FileNotFoundError(f"The file {file_path} does not exist") from e
         except Exception as e:

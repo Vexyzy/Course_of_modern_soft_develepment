@@ -3,9 +3,9 @@ import os
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms
 
 
-class SymmetricEncryption:
+class symmetric_encryption:
     """
-    Class for working with text by using Symetric Encryption.
+    Class for working with text by using Symmetric Encryption.
     """
     
     @staticmethod
