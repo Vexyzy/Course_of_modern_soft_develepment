@@ -7,6 +7,9 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms
 About dependencies Cipher and algorithms
 """
 
+FIRST_BYTE_SIZE = 32
+SECOND_BYTE_SIZE = 16
+
 
 class symmetric_encryption:
     """
@@ -20,7 +23,7 @@ class symmetric_encryption:
         Returns:
         - bytes: A randomly generated symmetric key.
         """
-        return os.urandom(32)  
+        return os.urandom(FIRST_BYTE_SIZE)
 
     @staticmethod
     def encrypt_text(symmetric_key: bytes, text: bytes) -> bytes:
@@ -32,10 +35,10 @@ class symmetric_encryption:
         Returns:
         - bytes: Encrypted text, prepended by the 16-byte nonce.
         """
-        nonce = os.urandom(16)  
+        nonce = os.urandom(SECOND_BYTE_SIZE)
         cipher = Cipher(
             algorithms.ChaCha20(
-                symmetric_key, nonce[:16]
+                symmetric_key, nonce[:SECOND_BYTE_SIZE]
             ),
             mode=None
         )
@@ -53,12 +56,12 @@ class symmetric_encryption:
         Returns:
         - bytes: Decrypted plaintext.
         """
-        nonce = encrypted_text[:16]  
-        ciphertext = encrypted_text[16:]
+        nonce = encrypted_text[:SECOND_BYTE_SIZE]
+        ciphertext = encrypted_text[SECOND_BYTE_SIZE:]
         cipher = Cipher(
             algorithms.ChaCha20(
                 symmetric_key,
-                nonce[:16]
+                nonce[:SECOND_BYTE_SIZE]
             ),
             mode=None
         )
