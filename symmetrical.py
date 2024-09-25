@@ -33,7 +33,12 @@ class symmetric_encryption:
         - bytes: Encrypted text, prepended by the 16-byte nonce.
         """
         nonce = os.urandom(16)  
-        cipher = Cipher(algorithms.ChaCha20(symmetric_key, nonce[:16]), mode=None) 
+        cipher = Cipher(
+            algorithms.ChaCha20(
+                symmetric_key, nonce[:16]
+            ),
+            mode=None
+        )
         encryptor = cipher.encryptor()
         encrypted_text = encryptor.update(text)
         return nonce + encrypted_text  
@@ -50,6 +55,12 @@ class symmetric_encryption:
         """
         nonce = encrypted_text[:16]  
         ciphertext = encrypted_text[16:]
-        cipher = Cipher(algorithms.ChaCha20(symmetric_key, nonce[:16]), mode=None) 
-        decryptor = cipher.decryptor()
-        return decryptor.update(ciphertext)
+        cipher = Cipher(
+            algorithms.ChaCha20(
+                symmetric_key,
+                nonce[:16]
+            ),
+            mode=None
+        )
+        decrypt = cipher.decryptor()
+        return decrypt.update(ciphertext)

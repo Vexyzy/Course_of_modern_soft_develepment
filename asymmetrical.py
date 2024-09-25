@@ -4,6 +4,7 @@ from cryptography.hazmat.primitives import hashes
 About dependencies
 """
 
+
 class asymmetric_encryption:
     """
     Class for working with key by using Asymmetric Encryption.
@@ -59,6 +60,6 @@ class asymmetric_encryption:
             padding.OAEP(
                 mgf=padding.MGF1(algorithm=hashes.SHA256()),
                 algorithm=hashes.SHA256(),
-                label=None
+                label=None,
             )
         )
