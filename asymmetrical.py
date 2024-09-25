@@ -16,9 +16,9 @@ class asymmetric_encryption:
         - tuple: Return private and public keys.
         """
         private_key = rsa.generate_private_key(
-                public_exponent=65537,
-                key_size=2048
-            )
+            public_exponent=65537,
+            key_size=2048
+        )
         public_key = private_key.public_key()
         return private_key, public_key
 
@@ -59,3 +59,4 @@ class asymmetric_encryption:
                 label=None
             )
         )
+
