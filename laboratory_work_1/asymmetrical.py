@@ -1,11 +1,15 @@
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
-from cryptography.hazmat.primitives import serialization, hashes
+from cryptography.hazmat.primitives import hashes
+"""
+About dependencies
+"""
 
-class AsymmetricEncryption:
+
+class asymmetric_encryption:
     """
-    Class for working with key by using Asymetric Encryption.
+    Class for working with key by using Asymmetric Encryption.
     """
-    
+
     @staticmethod
     def generate_keys() -> tuple:
         """
@@ -16,13 +20,12 @@ class AsymmetricEncryption:
         - tuple: Return private and public keys.
         """
         private_key = rsa.generate_private_key(
-                public_exponent=65537,
-                key_size=2048
-            )
+            public_exponent=65537,
+            key_size=2048
+        )
         public_key = private_key.public_key()
         return private_key, public_key
 
- 
     @staticmethod
     def encrypt_key(public_key: rsa.RSAPublicKey, symmetric_key: bytes) -> bytes:
         """
@@ -40,7 +43,7 @@ class AsymmetricEncryption:
                 algorithm=hashes.SHA256(),
                 label=None
             )
-        ) 
+        )
 
     @staticmethod
     def decrypt_key(private_key: rsa.RSAPrivateKey, encrypted_key: bytes) -> bytes:
@@ -55,8 +58,8 @@ class AsymmetricEncryption:
         return private_key.decrypt(
             encrypted_key,
             padding.OAEP(
-                mgf = padding.MGF1(algorithm=hashes.SHA256()),
+                mgf=padding.MGF1(algorithm=hashes.SHA256()),
                 algorithm=hashes.SHA256(),
-                label=None
+                label=None,
             )
         )

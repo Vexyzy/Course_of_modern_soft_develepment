@@ -1,11 +1,19 @@
 import os
-
+"""
+About dependencies os
+"""
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms
+"""
+About dependencies Cipher and algorithms
+"""
+
+FIRST_BYTE_SIZE = 32
+SECOND_BYTE_SIZE = 16
 
 
-class SymmetricEncryption:
+class symmetric_encryption:
     """
-    Class for working with text by using Symetric Encryption.
+    Class for working with text by using Symmetric Encryption.
     """
     
     @staticmethod
@@ -15,7 +23,7 @@ class SymmetricEncryption:
         Returns:
         - bytes: A randomly generated symmetric key.
         """
-        return os.urandom(32)  
+        return os.urandom(FIRST_BYTE_SIZE)
 
     @staticmethod
     def encrypt_text(symmetric_key: bytes, text: bytes) -> bytes:
@@ -27,8 +35,13 @@ class SymmetricEncryption:
         Returns:
         - bytes: Encrypted text, prepended by the 16-byte nonce.
         """
-        nonce = os.urandom(16)  
-        cipher = Cipher(algorithms.ChaCha20(symmetric_key, nonce[:16]), mode=None) 
+        nonce = os.urandom(SECOND_BYTE_SIZE)
+        cipher = Cipher(
+            algorithms.ChaCha20(
+                symmetric_key, nonce[:SECOND_BYTE_SIZE]
+            ),
+            mode=None
+        )
         encryptor = cipher.encryptor()
         encrypted_text = encryptor.update(text)
         return nonce + encrypted_text  
@@ -43,8 +56,14 @@ class SymmetricEncryption:
         Returns:
         - bytes: Decrypted plaintext.
         """
-        nonce = encrypted_text[:16]  
-        ciphertext = encrypted_text[16:]
-        cipher = Cipher(algorithms.ChaCha20(symmetric_key, nonce[:16]), mode=None) 
-        decryptor = cipher.decryptor()
-        return decryptor.update(ciphertext)
+        nonce = encrypted_text[:SECOND_BYTE_SIZE]
+        ciphertext = encrypted_text[SECOND_BYTE_SIZE:]
+        cipher = Cipher(
+            algorithms.ChaCha20(
+                symmetric_key,
+                nonce[:SECOND_BYTE_SIZE]
+            ),
+            mode=None
+        )
+        decrypt = cipher.decryptor()
+        return decrypt.update(ciphertext)

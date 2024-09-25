@@ -1,15 +1,19 @@
 import json
-
+"""
+About dependencies json
+"""
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
-from cryptography.hazmat.primitives.serialization import load_pem_public_key, load_pem_private_key
+"""
+About dependencies serialization and rsa
+"""
 
 
-class FileWorking:
+class file_working:
     """
     Class for work with files and keys.
     """
-    
+
     @staticmethod
     def read_file(file_path: str) -> str:
         """
@@ -45,7 +49,7 @@ class FileWorking:
         except Exception as e:
             raise e
 
-    @staticmethod 
+    @staticmethod
     def read_json(file_path: str) -> dict:
         """
         Read JSON from file.
@@ -61,8 +65,8 @@ class FileWorking:
             raise FileNotFoundError(f"The file {file_path} does not exist") from e
         except Exception as e:
             raise e
-        
-    @staticmethod  
+
+    @staticmethod
     def write_json(file_path: str, file_content: dict) -> None:
         """
         Write a dictionary to a JSON file.
@@ -74,12 +78,17 @@ class FileWorking:
         """
         try:
             with open(file_path, 'w', encoding='utf-8') as file:
-                json.dump(file_content, file, indent=4, ensure_ascii=False)
+                json.dump(
+                    file_content,
+                    file,
+                    indent=4,
+                    ensure_ascii=False
+                )
         except FileNotFoundError as e:
             raise FileNotFoundError(f"The file {file_path} does not exist") from e
         except Exception as e:
             raise e
-        
+
     @staticmethod
     def read_bytes_file(file_path: str) -> bytes:
         """
@@ -115,11 +124,11 @@ class FileWorking:
             raise FileNotFoundError(f"The file {file_path} does not exist") from e
         except Exception as e:
             raise e
-            
+
     @staticmethod
-    def serealization_public_key (public_key_path: str, public_key: rsa.RSAPublicKey) -> None:
+    def serialization_public_key(public_key_path: str, public_key: rsa.RSAPublicKey) -> None:
         """
-        Serealize the public key to a file.
+        Serialize the public key to a file.
         Args:
         - public_key_path (str): The path to the key's file.
         - public_key (rsa.RSAPublicKey) : The public key to serialize.
@@ -127,17 +136,22 @@ class FileWorking:
         - None
         """
         try:
-            FileWorking.write_bytes_file(public_key_path, public_key.public_bytes(encoding=serialization.Encoding.PEM,
-                    format=serialization.PublicFormat.SubjectPublicKeyInfo))
+            file_working.write_bytes_file(
+                public_key_path,
+                public_key.public_bytes(
+                    encoding=serialization.Encoding.PEM,
+                    format=serialization.PublicFormat.SubjectPublicKeyInfo
+                )
+            )
         except FileNotFoundError as e:
             raise FileNotFoundError(f"The file {public_key_path} does not exist") from e
         except Exception as e:
             raise e
-            
-    @staticmethod       
-    def serealization_private_key (private_key_path: str, private_key: rsa.RSAPrivateKey) -> None:
+
+    @staticmethod
+    def serialization_private_key(private_key_path: str, private_key: rsa.RSAPrivateKey) -> None:
         """
-        Serealize the private key to a file.
+        Serialize the private key to a file.
         Args:
         - private_key_path (str): The path to the key's file.
         - private_key (rsa.RSAPrivateKey) : The private key to serialize.
@@ -145,46 +159,55 @@ class FileWorking:
         - None
         """
         try:
-            FileWorking.write_bytes_file(private_key_path, private_key.private_bytes(encoding=serialization.Encoding.PEM,
+            file_working.write_bytes_file(
+                private_key_path, private_key.private_bytes(
+                    encoding=serialization.Encoding.PEM,
                     format=serialization.PrivateFormat.TraditionalOpenSSL,
-                    encryption_algorithm=serialization.NoEncryption()))
+                    encryption_algorithm=serialization.NoEncryption()
+                )
+            )
         except FileNotFoundError as e:
             raise FileNotFoundError(f"The file {private_key_path} does not exist") from e
         except Exception as e:
             raise e
-            
-    @staticmethod     
-    def deserealization_public_key (public_key_path: str) -> rsa.RSAPublicKey: 
+
+    @staticmethod
+    def deserialization_public_key(public_key_path: str) -> rsa.RSAPublicKey:
         """
-        Deserealize the public key.
+        Deserialize the public key.
         Args:
         - public_key_path (str) : The path to the key's file.
         Returns:
         - rsa.RSAPublicKey : Returns the public key.
         """
         try:
-            return serialization.load_pem_public_key(FileWorking.read_bytes_file(public_key_path), password=None)
+            return serialization.load_pem_public_key(
+                file_working.read_bytes_file(public_key_path),
+            )
         except FileNotFoundError as e:
             raise FileNotFoundError(f"The file {public_key_path} does not exist") from e
         except Exception as e:
             raise e
-        
+
     @staticmethod
-    def deserealization_private_key (private_key_path: str) -> rsa.RSAPrivateKey:
+    def deserialization_private_key(private_key_path: str) -> rsa.RSAPrivateKey:
         """
-        Deserealize the private key.
+        Deserialize the private key.
         Args:
         - private_key_path (str) : The path to the key's file.
         Returns:
         - rsa.RSAPrivateKey : Returns the private key.
         """
         try:
-            return serialization.load_pem_private_key(FileWorking.read_bytes_file(private_key_path), password=None)
+            return serialization.load_pem_private_key(
+                file_working.read_bytes_file(private_key_path),
+                password=None
+            )
         except FileNotFoundError as e:
             raise FileNotFoundError(f"The file {private_key_path} does not exist") from e
         except Exception as e:
             raise e
-        
+
     @staticmethod
     def serialization_nonce(file_path: str, file_nonce: bytes) -> None:
         """
@@ -196,23 +219,23 @@ class FileWorking:
         - None.
         """
         try:
-            FileWorking.write_bytes_file(file_path, file_nonce)
+            file_working.write_bytes_file(file_path, file_nonce)
         except FileNotFoundError as e:
             raise FileNotFoundError(f"The file {file_path} does not exist") from e
         except Exception as e:
             raise e
-        
-    @staticmethod      
-    def deserealization_nonce(file_path: str) -> bytes:
+
+    @staticmethod
+    def deserialization_nonce(file_path: str) -> bytes:
         """
         Deserialize the nonce
         Args:
-        - file_path (str): File path to serealize the nonce.
+        - file_path (str): File path to serialize the nonce.
         Returns:
         - bytes : The bytes read from the file.
         """
         try:
-            return FileWorking.read_bytes_file(file_path)
+            return file_working.read_bytes_file(file_path)
         except FileNotFoundError as e:
             raise FileNotFoundError(f"The file {file_path} does not exist") from e
         except Exception as e:
