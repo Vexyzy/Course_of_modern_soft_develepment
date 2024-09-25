@@ -3,7 +3,7 @@ from cryptography.hazmat.primitives import serialization, hashes
 
 class asymmetric_encryption:
     """
-    Class for working with key by using Asymetric Encryption.
+    Class for working with key by using Asymmetric Encryption.
     """
 
     @staticmethod
@@ -21,7 +21,6 @@ class asymmetric_encryption:
             )
         public_key = private_key.public_key()
         return private_key, public_key
-
 
     @staticmethod
     def encrypt_key(public_key: rsa.RSAPublicKey, symmetric_key: bytes) -> bytes:
