@@ -1,8 +1,12 @@
 import json
-
+"""
+About dependencies json
+"""
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
-from cryptography.hazmat.primitives.serialization import load_pem_public_key, load_pem_private_key
+"""
+About dependencies serialization and rsa
+"""
 
 
 class file_working:

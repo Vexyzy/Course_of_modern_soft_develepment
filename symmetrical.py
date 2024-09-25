@@ -1,6 +1,11 @@
 import os
-
+"""
+About dependencies os
+"""
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms
+"""
+About dependencies Cipher and algorithms
+"""
 
 
 class symmetric_encryption:
